@@ -1,95 +1,96 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client";
 
-export default function Home() {
+import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import EventCard from "@/components/EventCard";
+import Loading from "@/components/Loading";
+
+const countryOptions = [
+  { label: "Canada", code: "CA" },
+  { label: "United States", code: "US" },
+  { label: "United Kingdom", code: "GB" },
+  { label: "Germany", code: "DE" },
+  { label: "India", code: "IN" },
+];
+
+export default function HomePage() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const urlCountry = searchParams.get("country") || "CA";
+  const [selectedCountry, setSelectedCountry] = useState(urlCountry);
+  const [events, setEvents] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  // ✅ Sync state if user uses Back/Forward buttons
+  useEffect(() => {
+    const newCountry = searchParams.get("country") || "CA";
+    if (newCountry !== selectedCountry) {
+      setSelectedCountry(newCountry);
+    }
+  }, [searchParams]);
+
+  // ✅ Fetch on selectedCountry change
+  useEffect(() => {
+    const fetchEvents = async () => {
+      setLoading(true);
+      try {
+        const res = await fetch(`/api/events?country=${selectedCountry}`);
+        const data = await res.json();
+        setEvents(data);
+      } catch (error) {
+        console.error("Failed to fetch events", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchEvents();
+  }, [selectedCountry]);
+
+  const handleCountryChange = (e) => {
+    const country = e.target.value;
+    setSelectedCountry(country);
+
+    // ✅ Use replace so it adds to history and retains on back
+    router.replace(`/?country=${country}`);
+  };
+
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get started by editing <code>src/app/page.js</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <div>
+      <div style={{ display: "flex", justifyContent: "center", marginBottom: "1.5rem" }}>
+      <select
+         value={selectedCountry}
+          onChange={handleCountryChange}
+        style={{
+          padding: "0.5rem 1rem",
+          marginBottom: "1.5rem",
+          fontSize: "1rem",
+          width: "100%",
+          maxWidth: "400px",
+          border: "1px solid #ccc",
+          borderRadius: "6px",
+        }}
+      >
+        {countryOptions.map(({ label, code }) => (
+          <option key={code} value={code}>
+            {label}
+          </option>
+        ))}
+      </select>
+      </div>
 
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
-          >
-            Read our docs
-          </a>
+      {loading ? (
+        <Loading/>
+      ) : events.length > 0 ? (
+        <div className="event-grid">
+          {events.map((event) => (
+            <EventCard key={event.id} event={event} />
+          ))}
         </div>
-      </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      ) : (
+        <p>No events available for this country.</p>
+      )}
     </div>
   );
 }
