@@ -2,14 +2,14 @@
   height: 88vh;
   padding: 2rem 1rem;
   background-color: var(--bg-color);
-  padding-top: 96px;
+  padding-top: 130px;
   display: flex;
   justify-content: center;
   align-items: start;
 }
 
 .card {
-  height: 75vh;
+  height: 60vh;
   background-color:var(--card-bg);
   border-radius: 12px;
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
@@ -18,12 +18,12 @@
   padding:0 2rem;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 10px;
   margin-bottom: 3rem;
 }
 
 .heading {
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 700;
   color: var(--text-color);
   margin-bottom: 0;

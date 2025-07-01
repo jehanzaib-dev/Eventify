@@ -9,8 +9,8 @@
 
 .card {
   background-color:var(--card-bg);
-  padding: 48px 36px;
-  border-radius: 20px;
+  padding: 48px 32px;
+  border-radius: 16px;
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
   width: 100%;
   max-width: 400px;

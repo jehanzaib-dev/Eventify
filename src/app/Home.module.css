@@ -1,5 +1,5 @@
 .wrapper {
-  padding: 120px 16px 32px; /* Top spacing for fixed navbar */
+  padding-top: 150px;
   max-width: 1200px;
   margin: 0 auto;
   width: 100%;
@@ -40,7 +40,7 @@
 }
 @media (min-width: 640px) {
   .wrapper {
-    padding-top: 80px;
+    padding-top: 90px;
   }
 
   .countrySelect {
