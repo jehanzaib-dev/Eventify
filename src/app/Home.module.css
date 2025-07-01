@@ -1,27 +1,55 @@
 .wrapper {
-  padding: 32px 16px;
-  padding-top: 96px; /* 👈 make space for navbar */
+  padding: 120px 16px 32px; /* Top spacing for fixed navbar */
   max-width: 1200px;
   margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .filterContainer {
   display: flex;
   justify-content: center;
   margin-bottom: 1.5rem;
+  padding: 0 1rem;
 }
 
 .countrySelect {
-  padding: 0.5rem 1rem;
-  font-size: 1rem;
+  padding: 0.5rem;
+  font-size: 0.95rem;
   width: 100%;
   max-width: 400px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--text-color);
   border-radius: 6px;
-  margin-bottom: 1.5rem;
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  transition: all 0.3s ease;
 }
+
+.countrySelect:focus {
+  outline: none;
+  border-color: var(--link-color);
+}
+
 .eventGrid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 24px;
+  gap: 1rem;
+  padding: 0 1rem;
+  width: 100%;
+  box-sizing: border-box;
 }
+@media (min-width: 640px) {
+  .wrapper {
+    padding-top: 80px;
+  }
+
+  .countrySelect {
+    font-size: 1rem;
+    padding: 1rem;
+  }
+
+  .eventGrid {
+    gap: 1.5rem;
+  }
+}
+

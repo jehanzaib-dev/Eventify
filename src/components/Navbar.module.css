@@ -3,8 +3,8 @@
   top: 0;
   left: 0;
   width: 100%;
-  height: 64px;
-  background-color: #000;
+  height: auto;
+  background-color: var(--card-bg);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   z-index: 1000;
 }
@@ -14,47 +14,55 @@
   margin: 0 auto;
   padding: 16px 24px;
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
+  gap: 1rem;
 }
 
 .logo {
-  font-size: 24px;
+  font-size: 36px;
   font-weight: bold;
-  color: #fff;
+  color: var(--text-color);
   text-decoration: none;
+  flex-shrink: 0;
 }
 
 .links {
   display: flex;
-  gap: 24px;
+  flex-wrap: wrap;
+  gap: 16px;
   align-items: center;
+  justify-content: flex-end;
+  flex: 1;
+  min-width: 0;
 }
 
 .link {
-  color: white;
+  color: var(--text-color);
   text-decoration: none;
-  padding: 8px 12px;
+  padding: 6px 10px;
+  font-size: 18px;
   transition: color 0.2s ease;
   border-bottom: 2px solid transparent;
 }
 
 .link:hover {
-  color: #dbeafe;
+  color: var(--link-color);
 }
 
 .active {
   font-weight: bold;
-  border-bottom: 2px solid #dbeafe;
+  border-bottom: 2px solid var(--link-color);
 }
 
 .loginButton {
-  padding: 8px 16px;
-  background-color: #2563eb;
-  color: white;
+  padding: 6px 12px;
+  background-color: var(--button-bg);
+  color: var(--button-text);
   border: none;
-  border-radius: 8px;
-  font-size: 15px;
+  border-radius: 6px;
+  font-size: 14px;
   text-decoration: none;
   transition: background-color 0.2s ease;
 }
@@ -62,12 +70,23 @@
 .loginButton:hover {
   background-color: #1d4ed8;
 }
+
+.logoutButton {
+  padding: 6px 12px;
+  background-color: transparent;
+  border: 1px solid var(--text-color);
+  color: var(--text-color);
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
 .themeToggle {
   background: none;
   border: none;
   font-size: 20px;
   cursor: pointer;
-  margin-left: 12px;
+  margin-left: 8px;
   color: var(--text-color);
   transition: transform 0.2s;
 }
@@ -76,11 +95,35 @@
   transform: scale(1.15);
 }
 
+.userName {
+  font-size: 14px;
+  color: var(--text-color);
+}
+
 @media (max-width: 640px) {
-  .links {
-    gap: 8px;
+  .container {
+    flex-direction: column;
+    align-items: center;
   }
-  .link{
+  .logo{
+    font-size: 30px;
+  }
+
+  .links {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .link,
+  .loginButton,
+  .logoutButton {
     font-size: 14px;
+    padding: 6px 10px;
+  }
+
+  .userName {
+    font-size: 13px;
   }
 }

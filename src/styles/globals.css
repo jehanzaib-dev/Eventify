@@ -25,6 +25,26 @@
 }
 
 /* Apply to global elements */
+/* Make the layout take full height */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Flex column layout that pushes footer down */
+.layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Let main grow to fill available space */
+main {
+  flex: 1;
+}
+
 body {
   background-color: var(--bg-color);
   color: var(--text-color);

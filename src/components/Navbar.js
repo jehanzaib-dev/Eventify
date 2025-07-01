@@ -60,60 +60,60 @@ export default function Navbar() {
     router.push("/login");
   };
 
-  return (
-    <nav className={styles.navbar}>
-      <div className={styles.container}>
-        <Link href="/" className={styles.logo}>
-          🎫 Eventify
-        </Link>
-
-        <div className={styles.links}>
-          <Link
-            href="/about"
-            className={`${styles.link} ${pathname === "/about" ? styles.active : ""}`}
-          >
-            About
+    return (
+      <nav className={styles.navbar}>
+        <div className={styles.container}>
+          <Link href="/" className={styles.logo}>
+            🎫 Eventify
           </Link>
 
-          <Link
-            href="/contact"
-            className={`${styles.link} ${pathname === "/contact" ? styles.active : ""}`}
-          >
-            Contact
-          </Link>
+          <div className={styles.links}>
+            <Link
+              href="/about"
+              className={`${styles.link} ${pathname === "/about" ? styles.active : ""}`}
+            >
+              About
+            </Link>
 
-          {user ? (
-            <>
-              <span className={styles.userName}>
-                Hi, {user.name.split(" ")[0]}
-              </span>
-              <button onClick={handleLogout} className={styles.logoutButton}>
-                Logout
-              </button>
-            </>
-          ) : (
-            <>
-              <Link
-                href="/login"
-                className={`${styles.loginButton} ${pathname === "/login" ? styles.active : ""}`}
-              >
-                Login
-              </Link>
-              <Link
-                href="/signup"
-                className={`${styles.link} ${pathname === "/signup" ? styles.active : ""}`}
-              >
-                Signup
-              </Link>
-            </>
-          )}
+            <Link
+              href="/contact"
+              className={`${styles.link} ${pathname === "/contact" ? styles.active : ""}`}
+            >
+              Contact
+            </Link>
 
-          {/* Theme Toggle */}
-          <button onClick={toggleTheme} className={styles.themeToggle}>
-            {darkMode ? "🌞" : "🌙"}
-          </button>
+            {user ? (
+              <>
+                <span className={styles.userName}>
+                  Hi, {user.name.split(" ")[0]}
+                </span>
+                <button onClick={handleLogout} className={styles.logoutButton}>
+                  Logout
+                </button>
+              </>
+            ) : (
+              <>
+                <Link
+                  href="/login"
+                  className={`${styles.loginButton} ${pathname === "/login" ? styles.active : ""}`}
+                >
+                  Login
+                </Link>
+                <Link
+                  href="/signup"
+                  className={`${styles.link} ${pathname === "/signup" ? styles.active : ""}`}
+                >
+                  Signup
+                </Link>
+              </>
+            )}
+
+            {/* Theme Toggle */}
+            <button onClick={toggleTheme} className={styles.themeToggle}>
+              {darkMode ? "🌞" : "🌙"}
+            </button>
+          </div>
         </div>
-      </div>
-    </nav>
-  );
+      </nav>
+    );
 }
