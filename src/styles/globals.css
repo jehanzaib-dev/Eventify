@@ -4,30 +4,37 @@
 *::after {
   box-sizing: border-box;
 }
+/* 🌞 Light Theme */
 :root {
-  --primary: #0070f3;
-  --primary-hover: #0059c1;
-  --gray: #eaeaea;
-  --text-dark: #111;
-  --text-light: #555;
-  --card-bg: #fff;
-  --card-shadow: rgba(0, 0, 0, 0.06) 0 2px 8px;
+  --bg-color: #ffffff;
+  --text-color: #111827;
+  --card-bg: #bbb;
+  --button-bg: #2563eb;
+  --button-text: #ffffff;
+  --link-color: #2563eb;
 }
 
+/* 🌙 Dark Theme */
+.dark {
+  --bg-color: #0f172a;
+  --text-color: #f8fafc;
+  --card-bg: #1e293b;
+  --button-bg: #334155;
+  --button-text: #f8fafc;
+  --link-color: #38bdf8;
+}
+
+/* Apply to global elements */
 body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Inter', sans-serif;
-  font-size: 16px;
-  background-color: #f5f7fa;
-  color: #111;
-  line-height: 1.6;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.3s, color 0.3s;
 }
 
 a {
-  color: inherit;
-  text-decoration: none;
+  color: var(--link-color);
 }
+
 
 img {
   max-width: 100%;

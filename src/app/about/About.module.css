@@ -1,14 +1,17 @@
 .wrapper {
+  background-color: var(--bg-color);
   padding: 2rem;
+  padding-top: 96px;
 }
 
 .heading {
+  color: var(--text-color);
   font-size: 2rem;
   margin-bottom: 1rem;
 }
 
 .paragraph {
+  color: var(--text-color);
   margin-bottom: 0.75rem;
-  color: #333;
   line-height: 1.6;
 }

@@ -1,5 +1,6 @@
 .wrapper {
   padding: 2rem;
+  padding-top: 96px;
 }
 
 .heading {
@@ -9,7 +10,7 @@
 
 .paragraph {
   margin-bottom: 0.75rem;
-  color: #333;
+  color: var(--text-color);
   line-height: 1.6;
 }
 
