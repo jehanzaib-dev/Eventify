@@ -1,0 +1,14 @@
+.wrapper {
+  padding: 2rem;
+}
+
+.heading {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.paragraph {
+  margin-bottom: 0.75rem;
+  color: #333;
+  line-height: 1.6;
+}

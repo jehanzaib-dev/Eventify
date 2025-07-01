@@ -1,11 +1,9 @@
-// src/app/events/[id]/page.js
-
 import { notFound } from "next/navigation";
-import Link from 'next/link';
-
+import Link from "next/link";
+import styles from "./EventDetails.module.css";
 
 export async function generateStaticParams() {
-  return []; // we'll use dynamic rendering for now
+  return [];
 }
 
 async function getEventDetails(id) {
@@ -23,7 +21,6 @@ async function getEventDetails(id) {
     return null;
   }
 
-
   return {
     id: event.id,
     name: event.name,
@@ -36,36 +33,29 @@ async function getEventDetails(id) {
 }
 
 export default async function EventDetailsPage({ params, searchParams }) {
-  const country=searchParams.country || "CA";
+  const country = searchParams.country || "CA";
   const { id } = params;
   const event = await getEventDetails(id);
-  if(!event){
+
+  if (!event) {
     notFound();
   }
 
   return (
-    <main style={{ padding: "2rem" }}>
-      <h1>{event.name}</h1>
-      <p>📍 {event.city} — {event.venue}</p>
-      <p>📅 {event.date}</p>
-      <img
-        src={event.image}
-        alt={event.name}
-        style={{ width: "100%", maxWidth: "600px", borderRadius: "10px", marginTop: "1rem" }}
-      />
-      <p style={{ marginTop: "1.5rem" }}>{event.description}</p>
+    <main className={styles.wrapper}>
+    <div className={styles.card}>
+      <h1 className={styles.heading}>{event.name}</h1>
+      <p className={styles.meta}>📍 {event.city} — {event.venue}</p>
+      <p className={styles.meta}>📅 {event.date}</p>
 
-      <Link href={`/?country=${country}`} style={{
-        display: "inline-block",
-        marginTop: "2rem",
-        padding: "0.5rem 1rem",
-        background: "#000",
-        color: "#fff",
-        borderRadius: "8px",
-        textDecoration: "none"
-      }}>
+      <img src={event.image} alt={event.name} className={styles.image} />
+
+      <p className={styles.description}>{event.description}</p>
+
+      <Link href={`/?country=${country}`} className={styles.backButton}>
         ← Back to Home
       </Link>
+      </div>
     </main>
   );
 }

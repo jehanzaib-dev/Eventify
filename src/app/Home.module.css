@@ -1,0 +1,27 @@
+.wrapper {
+  padding: 32px 16px;
+  padding-top: 96px; /* 👈 make space for navbar */
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.filterContainer {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.countrySelect {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  width: 100%;
+  max-width: 400px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin-bottom: 1.5rem;
+}
+.eventGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}

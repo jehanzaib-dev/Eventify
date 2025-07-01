@@ -1,7 +1,5 @@
-// src/app/events/[id]/loading.js
-
-import Spinner from '@/components/Spinner';
+import LoadingSpinner from "@/components/shared/LoadingSpinner";
 
 export default function Loading() {
-  return <Spinner/>;
+  return <LoadingSpinner />;
 }

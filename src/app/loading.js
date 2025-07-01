@@ -1,6 +1,5 @@
-// src/app/loading.js
-import Spinner from "@/components/Spinner";
+import LoadingSpinner from "@/components/shared/LoadingSpinner";
 
-export default function GlobalLoading() {
-  return <Spinner />;
+export default function Loading() {
+  return <LoadingSpinner />;
 }

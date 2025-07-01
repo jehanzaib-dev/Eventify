@@ -5,8 +5,12 @@ import { useRouter, useSearchParams } from "next/navigation";
 import EventCard from "@/components/EventCard";
 import Loading from "@/components/Loading";
 
+import styles from "./Home.module.css";
+
 const countryOptions = [
   { label: "Canada", code: "CA" },
+  { label: "Pakistan", code: "PK" },
+  { label: "UAE", code: "AE" },
   { label: "United States", code: "US" },
   { label: "United Kingdom", code: "GB" },
   { label: "Germany", code: "DE" },
@@ -56,21 +60,13 @@ export default function HomePage() {
     router.replace(`/?country=${country}`);
   };
 
-  return (
-    <div>
-      <div style={{ display: "flex", justifyContent: "center", marginBottom: "1.5rem" }}>
+return (
+  <div className={styles.wrapper}>
+    <div className={styles.filterContainer}>
       <select
-         value={selectedCountry}
-          onChange={handleCountryChange}
-        style={{
-          padding: "0.5rem 1rem",
-          marginBottom: "1.5rem",
-          fontSize: "1rem",
-          width: "100%",
-          maxWidth: "400px",
-          border: "1px solid #ccc",
-          borderRadius: "6px",
-        }}
+        value={selectedCountry}
+        onChange={handleCountryChange}
+        className={styles.countrySelect}
       >
         {countryOptions.map(({ label, code }) => (
           <option key={code} value={code}>
@@ -78,19 +74,20 @@ export default function HomePage() {
           </option>
         ))}
       </select>
-      </div>
-
-      {loading ? (
-        <Loading/>
-      ) : events.length > 0 ? (
-        <div className="event-grid">
-          {events.map((event) => (
-            <EventCard key={event.id} event={event} />
-          ))}
-        </div>
-      ) : (
-        <p>No events available for this country.</p>
-      )}
     </div>
-  );
+
+    {loading ? (
+      <Loading />
+    ) : events.length > 0 ? (
+      <div className={styles.eventGrid}>
+        {events.map((event) => (
+          <EventCard key={event.id} event={event} />
+        ))}
+      </div>
+    ) : (
+      <p>No events available for this country.</p>
+    )}
+  </div>
+);
+  
 }

@@ -1,52 +1,66 @@
-// src/components/Navbar.js
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import styles from "./Navbar.module.css";
 
 export default function Navbar() {
-  const pathname = usePathname();
+  const router = useRouter();
+  const [user, setUser] = useState(null);
 
-  const navItemStyle = (href) => ({
-    color: pathname === href ? "#00bfff" : "#fff",
-    textDecoration: "none",
-    fontWeight: pathname === href ? "bold" : "normal",
-    borderBottom: pathname === href ? "2px solid #00bfff" : "none",
-    paddingBottom: "4px",
-  });
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
+
+  useEffect(() => {
+    const loadUser = () => {
+      const storedUser = localStorage.getItem("user");
+      setUser(storedUser ? JSON.parse(storedUser) : null);
+    };
+
+    loadUser();
+    window.addEventListener("userChange", loadUser);
+
+    return () => {
+      window.removeEventListener("userChange", loadUser);
+    };
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    setUser(null);
+    router.push("/login");
+  };
 
   return (
-    <nav
-      style={{
-        position: "sticky",
-        top: 0,
-        zIndex: 100,
-        background: "#000",
-        color: "#fff",
-        padding: "2rem 2rem",
-        fontSize:"1.1rem",
-      }}
-    >
-      <div
-        style={{
-          maxWidth: "1100px",
-          margin: "0 auto",
-          display: "flex",
-          flexWrap: "wrap",
-          justifyContent: "space-between",
-          alignItems: "center",
-          gap: "1rem",
-        }}
-      >
-        <Link href="/" style={{ display: "flex", alignItems: "center", gap: "0.75rem", textDecoration: "none" }}>
-          <span style={{ fontSize: "3rem", fontWeight: "bold", color: "#fff" }}>Eventify</span>
+    <nav className={styles.navbar}>
+    <div className={styles.container}>
+      <Link href="/" className={styles.logo}>
+        🎫 Eventify
+      </Link>
+      <div className={styles.links}>
+        <Link href="/about" className={styles.link}>About</Link>
+        <Link href="/contact" className={styles.link}>Contact
         </Link>
 
-        <div style={{ display: "flex", gap: "1.5rem", flexWrap: "wrap" }}>
-          <Link href="/" style={navItemStyle("/")}>Home</Link>
-          <Link href="/about" style={navItemStyle("/about")}>About</Link>
-          <Link href="/contact" style={navItemStyle("/contact")}>Contact</Link>
-        </div>
+        {user ? (
+          <>
+            <span className={styles.userName}>Hi, {user.name.split(" ")[0]}</span>
+            <button onClick={handleLogout} className={styles.logoutButton}>
+              Logout
+            </button>
+          </>
+        ) : (
+          <>
+            <Link href="/login" className={styles.loginButton}>Login</Link>
+            <Link href="/signup" className={styles.link}>Signup</Link>
+          </>
+        )}
+      </div>
       </div>
     </nav>
   );
