@@ -76,7 +76,8 @@ return (
         onChange={handleCountryChange}
         className={styles.countrySelect}
       >
-        {countryOptions.map(({ label, code }) => (
+      {
+        countryOptions.map(({ label, code }) => (
           <option key={code} value={code}>
             {label}
           </option>

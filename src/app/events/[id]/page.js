@@ -1,60 +1,80 @@
-import { notFound } from "next/navigation";
+"use client";
+
+import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useSearchParams, useParams } from "next/navigation";
+import fetchEventDetails from "@/utils/fetchEventDetails";
 import styles from "./EventDetails.module.css";
 
-export async function generateStaticParams() {
-  return [];
-}
+export default function EventDetailsPage() {
+  const { id } = useParams();
+  const searchParams = useSearchParams();
+  const country = searchParams.get("country") || "CA";
 
-async function getEventDetails(id) {
-  const apiKey = process.env.NEXT_PUBLIC_TICKETMASTER_API_KEY;
-  const res = await fetch(`https://app.ticketmaster.com/discovery/v2/events/${id}.json?apikey=${apiKey}`);
+  const [event, setEvent] = useState(null);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  if (!res.ok) {
-    console.log("API failed for id:", id);
-    return null;
-  }
-
-  const event = await res.json();
-  if (event.errors || !event.name) {
-    console.log("No event found:", event);
-    return null;
-  }
-
-  return {
-    id: event.id,
-    name: event.name,
-    date: event.dates?.start?.localDate || "",
-    city: event._embedded?.venues?.[0]?.city?.name || "",
-    venue: event._embedded?.venues?.[0]?.name || "",
-    description: event.info || "No description provided.",
-    image: event.images?.[0]?.url || "",
+  const loadEvent = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const data = await fetchEventDetails(id);
+      setEvent(data);
+    } catch (err) {
+      if (err.message === "fetch failed") {
+        setError("Network error. Please check your internet connection.");
+      } else {
+        setError(err.message);
+      }
+    } finally {
+      setLoading(false);
+    }
   };
-}
 
-export default async function EventDetailsPage({ params, searchParams }) {
-  const country = searchParams.country || "CA";
-  const { id } = params;
-  const event = await getEventDetails(id);
+  useEffect(() => {
+    loadEvent();
+  }, [id]);
 
-  if (!event) {
-    notFound();
+  if (loading) {
+    return (
+      <main className={styles.wrapper}>
+        <p>Loading event details...</p>
+      </main>
+    );
+  }
+
+  if (error) {
+    return (
+      <main className={styles.wrapper}>
+  <div className={styles.errorCard}>
+    <h2 className={styles.errorHeading}>⚠️ Failed to load event</h2>
+    <p className={styles.errorMessage}>{error}</p>
+    <div className={styles.buttonGroup}>
+      <Link href={`/?country=${country}`} className={styles.errorbackButton}>
+        ← Back to Home
+      </Link>
+      <button onClick={loadEvent} className={styles.retryButton}>
+      Retry
+      </button>
+    </div>
+  </div>
+</main>
+
+    );
   }
 
   return (
     <main className={styles.wrapper}>
-    <div className={styles.card}>
-      <h1 className={styles.heading}>{event.name}</h1>
-      <p className={styles.meta}>📍 {event.city} — {event.venue}</p>
-      <p className={styles.meta}>📅 {event.date}</p>
-
-      <img src={event.image} alt={event.name} className={styles.image} />
-
-      <p className={styles.description}>{event.description}</p>
-
-      <Link href={`/?country=${country}`} className={styles.backButton}>
-        ← Back to Home
-      </Link>
+      <div className={styles.card}>
+        <h1 className={styles.heading}>{event.name}</h1>
+        <p className={styles.meta}>📍 {event.city} — {event.venue}</p>
+        <p className={styles.meta}>📅 {event.date}</p>
+        <img src={event.image} alt={event.name} className={styles.image} />
+        <p className={styles.description}>{event.description}</p>
+        <Link href={`/?country=${country}`} className={styles.backButton}>
+          ← Back to Home
+        </Link>
       </div>
     </main>
   );
