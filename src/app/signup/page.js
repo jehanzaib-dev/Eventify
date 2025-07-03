@@ -1,50 +1,40 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { defaultMockUsers } from "@/utils/mockUsers";
 import styles from "./Signup.module.css";
+import { findUserByEmail, addUser } from "@/utils/mockUsers";
+import {toast} from "react-toastify";
 
-export default function SignupPage() {
+
+export default function Signup() {
   const router = useRouter();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  useEffect(() => {
-    const existing = localStorage.getItem("users");
-    if (!existing) {
-      localStorage.setItem("users", JSON.stringify(defaultMockUsers));
-    }
-
-    const user = localStorage.getItem("user");
-    if (user) {
-      router.push("/");
-    }
-  }, []);
-
   const handleSignup = (e) => {
     e.preventDefault();
-    const users = JSON.parse(localStorage.getItem("users")) || [];
-    const exists = users.find((u) => u.email === email);
 
-    if (exists) {
-      setError("User already exists");
+    if (findUserByEmail(email)) {
+      setError("User with this email already exists");
       return;
     }
+    if (!name || !email || !password) {
+  toast.error("All fields are required");
+  return;
+  }
 
-    const newUser = {
-      id: Date.now(),
-      name,
-      email,
-      password,
-    };
+    const newUser = { name, email, password };
+    addUser(newUser);
 
-    users.push(newUser);
-    localStorage.setItem("users", JSON.stringify(users));
-    localStorage.setItem("user", JSON.stringify(newUser));
+    // Automatically log in the new user
+    localStorage.setItem("user", JSON.stringify({ ...newUser, id: Date.now() }));
+    toast.success("Account created! You can now log in.");
+
     window.dispatchEvent(new Event("userChange"));
+
     router.push("/");
   };
 
@@ -52,30 +42,30 @@ export default function SignupPage() {
     <main className={styles.wrapper}>
     <div className={styles.card}>
       <h2 className={styles.heading}>Sign Up</h2>
-      <form onSubmit={handleSignup} className={styles.form}>
+      <form onSubmit={handleSignup}>
         <input
           type="text"
           placeholder="Name"
           className={styles.input}
           value={name}
-          required
           onChange={(e) => setName(e.target.value)}
+          required
         />
         <input
           type="email"
           placeholder="Email"
           className={styles.input}
           value={email}
-          required
           onChange={(e) => setEmail(e.target.value)}
+          required
         />
         <input
           type="password"
           placeholder="Password"
           className={styles.input}
           value={password}
-          required
           onChange={(e) => setPassword(e.target.value)}
+          required
         />
         <button type="submit" className={styles.button}>
           Sign Up

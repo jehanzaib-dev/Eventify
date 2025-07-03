@@ -1,6 +1,6 @@
-// src/utils/mockUsers.js
+// utils/mockUsers.js
 
-export const defaultMockUsers = [
+let users = [
   {
     id: 1,
     name: "John Doe",
@@ -14,3 +14,20 @@ export const defaultMockUsers = [
     password: "password",
   },
 ];
+
+// Get all users
+export function getUsers() {
+  return users;
+}
+
+// Find a user by email
+export function findUserByEmail(email) {
+  return users.find((user) => user.email === email);
+}
+
+// Add a new user
+export function addUser(newUser) {
+  const id = users.length + 1;
+  const userWithId = { id, ...newUser };
+  users.push(userWithId);
+}
