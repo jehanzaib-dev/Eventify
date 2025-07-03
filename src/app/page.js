@@ -25,6 +25,7 @@ export default function HomePage() {
   const [selectedCountry, setSelectedCountry] = useState(urlCountry);
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [error, setError]=useState(null);
 
   // ✅ Sync state if user uses Back/Forward buttons
   useEffect(() => {
@@ -35,20 +36,27 @@ export default function HomePage() {
   }, [searchParams]);
 
   // ✅ Fetch on selectedCountry change
-  useEffect(() => {
-    const fetchEvents = async () => {
+  const fetchEvents = async () => {
       setLoading(true);
+      setError("");//clear previous error before new request
       try {
         const res = await fetch(`/api/events?country=${selectedCountry}`);
+        if(!res.ok){
+         throw new Error(`${res.statusText}: Please Check your internet connection`);
+        }
         const data = await res.json();
         setEvents(data);
-      } catch (error) {
+      }
+      catch (error) {
+        setError(error.message || "Something went wrong while fetching events");
         console.error("Failed to fetch events", error);
-      } finally {
+
+      } 
+      finally {
         setLoading(false);
       }
     };
-
+  useEffect(() => {
     fetchEvents();
   }, [selectedCountry]);
 
@@ -78,7 +86,16 @@ return (
 
     {loading ? (
       <Loading />
-    ) : events.length > 0 ? (
+    ): error ? (
+  <div className={styles.errorBox}>
+  <p className={styles.errorMessage}>{error}</p>
+  <button onClick={fetchEvents} className={styles.retryButton}>
+    Try Again
+    </button>
+    </div> 
+    ): 
+
+    events.length > 0 ? (
       <div className={styles.eventGrid}>
         {events.map((event) => (
           <EventCard key={event.id} event={event} />
