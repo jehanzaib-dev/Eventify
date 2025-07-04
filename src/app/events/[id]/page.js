@@ -22,7 +22,7 @@ export default function EventDetailsPage() {
       const data = await fetchEventDetails(id);
       setEvent(data);
     } catch (err) {
-      if (err.message === "fetch failed") {
+      if (err.message === "failed to fetch") {
         setError("Network error. Please check your internet connection.");
       } else {
         setError(err.message);

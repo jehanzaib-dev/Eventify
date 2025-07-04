@@ -60,3 +60,19 @@
   font-size: 0.9rem;
   text-align: center;
 }
+.passwordCntnr {
+  position: relative;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.eyeButton {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translatey(-70%);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--text-color);
+}

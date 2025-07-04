@@ -5,12 +5,13 @@ import { useRouter } from "next/navigation";
 import styles from "./Login.module.css";
 import { findUserByEmail } from "@/utils/mockUsers";
 import {toast} from "react-toastify";
-
+import { Eye, EyeOff } from "lucide-react"; // You can use icons from lucide-react or any other lib
 
 export default function Login() {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
 
   const handleLogin = (e) => {
@@ -48,14 +49,23 @@ export default function Login() {
           onChange={(e) => setEmail(e.target.value)}
           required
         />
+        <div className={styles.passwordCntnr}>
         <input
-          type="password"
+          type={showPassword ? "text":"password"}
           placeholder="Password"
           className={styles.input}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
         />
+        <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className={styles.eyeButton}
+            >
+              {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+            </button>
+        </div>
         <button type="submit" className={styles.button}>
           Login
         </button>

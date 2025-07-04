@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import styles from "./Signup.module.css";
 import { findUserByEmail, addUser } from "@/utils/mockUsers";
 import {toast} from "react-toastify";
+import { Eye, EyeOff } from "lucide-react";
+
 
 
 export default function Signup() {
@@ -12,6 +14,7 @@ export default function Signup() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
 
   const handleSignup = (e) => {
@@ -27,10 +30,8 @@ export default function Signup() {
   }
 
     const newUser = { name, email, password };
-    addUser(newUser);
-
-    // Automatically log in the new user
-    localStorage.setItem("user", JSON.stringify({ ...newUser, id: Date.now() }));
+    const savedUser=addUser(newUser);
+    localStorage.setItem("user", JSON.stringify(savedUser));
     toast.success("Account created! You can now log in.");
 
     window.dispatchEvent(new Event("userChange"));
@@ -59,14 +60,23 @@ export default function Signup() {
           onChange={(e) => setEmail(e.target.value)}
           required
         />
+        <div className={styles.passwordCntnr}>
         <input
-          type="password"
+          type={showPassword ? "text":"password"}
           placeholder="Password"
           className={styles.input}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
         />
+        <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className={styles.eyeButton}
+            >
+              {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+            </button>
+        </div>
         <button type="submit" className={styles.button}>
           Sign Up
         </button>

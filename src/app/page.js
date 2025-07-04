@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import EventCard from "@/components/EventCard";
 import Loading from "@/components/Loading";
+import fetchEventsByCountry from "@/utils/fetchEvents";
 
 import styles from "./Home.module.css";
 
@@ -25,9 +26,8 @@ export default function HomePage() {
   const [selectedCountry, setSelectedCountry] = useState(urlCountry);
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError]=useState(null);
+  const [error, setError] = useState(null);
 
-  // ✅ Sync state if user uses Back/Forward buttons
   useEffect(() => {
     const newCountry = searchParams.get("country") || "CA";
     if (newCountry !== selectedCountry) {
@@ -35,36 +35,27 @@ export default function HomePage() {
     }
   }, [searchParams]);
 
-  // ✅ Fetch on selectedCountry change
-  const fetchEvents = async () => {
-      setLoading(true);
-      setError("");//clear previous error before new request
-      try {
-        const res = await fetch(`/api/events?country=${selectedCountry}`);
-        if(!res.ok){
-         throw new Error(`${res.statusText}: Please Check your internet connection`);
-        }
-        const data = await res.json();
-        setEvents(data);
-      }
-      catch (error) {
-        setError(error.message || "Something went wrong while fetching events");
-        console.error("Failed to fetch events", error);
+  const loadEvents = async () => {
+    setLoading(true);
+    setError(null);
 
-      } 
-      finally {
-        setLoading(false);
-      }
-    };
+    try {
+      const data = await fetchEventsByCountry(selectedCountry);
+      setEvents(data);
+    } catch (err) {
+      setError(err.message || "Something went wrong while fetching events.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    fetchEvents();
+    loadEvents();
   }, [selectedCountry]);
 
   const handleCountryChange = (e) => {
     const country = e.target.value;
     setSelectedCountry(country);
-
-    // ✅ Use replace so it adds to history and retains on back
     router.replace(`/?country=${country}`);
   };
 

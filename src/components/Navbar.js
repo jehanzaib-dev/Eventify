@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import styles from "./Navbar.module.css";
+import {toast} from "react-toastify";
 
 export default function Navbar() {
   const router = useRouter();
@@ -57,7 +58,8 @@ export default function Navbar() {
   const handleLogout = () => {
     localStorage.removeItem("user");
     setUser(null);
-    router.push("/login");
+    toast.success("Logged Out successfully!");
+    router.push("/");
   };
 
     return (

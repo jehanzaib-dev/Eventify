@@ -15,11 +15,6 @@ let users = [
   },
 ];
 
-// Get all users
-export function getUsers() {
-  return users;
-}
-
 // Find a user by email
 export function findUserByEmail(email) {
   return users.find((user) => user.email === email);
@@ -30,4 +25,5 @@ export function addUser(newUser) {
   const id = users.length + 1;
   const userWithId = { id, ...newUser };
   users.push(userWithId);
+  return userWithId;
 }
