@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useSearchParams, useParams } from "next/navigation";
 import fetchEventDetails from "@/utils/fetchEventDetails";
+import Loading from './loading.js';
 import styles from "./EventDetails.module.css";
 
 export default function EventDetailsPage() {
@@ -37,11 +38,7 @@ export default function EventDetailsPage() {
   }, [id]);
 
   if (loading) {
-    return (
-      <main className={styles.wrapper}>
-        <p>Loading event details...</p>
-      </main>
-    );
+    return <Loading/>;
   }
 
   if (error) {
