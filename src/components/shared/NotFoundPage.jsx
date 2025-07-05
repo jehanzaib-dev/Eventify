@@ -4,12 +4,11 @@
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import styles from "./NotFound.module.css";
-import { Suspense } from "react";
 
-function NotFoundInner() {
+export default function NotFoundPage() {
   const searchParams = useSearchParams();
 
-  // You can use searchParams.get(...) if needed here
+  // Optional: use searchParams.get(...) if needed
 
   return (
     <main className={styles.wrapper}>
@@ -21,13 +20,5 @@ function NotFoundInner() {
         🏠 Go to Home
       </Link>
     </main>
-  );
-}
-
-export default function NotFoundPage() {
-  return (
-    <Suspense fallback={null}>
-      <NotFoundInner />
-    </Suspense>
   );
 }
