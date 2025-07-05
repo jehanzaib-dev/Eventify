@@ -36,7 +36,7 @@ export default function Signup() {
 
     window.dispatchEvent(new Event("userChange"));
 
-    router.push("/");
+    router.push("/homepage");
   };
 
   return (

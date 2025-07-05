@@ -1,102 +1,40 @@
+// app/page.js
+
 "use client";
 
-import { useState, useEffect } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
-import EventCard from "@/components/EventCard";
-import Loading from "@/components/Loading";
-import fetchEventsByCountry from "@/utils/fetchEvents";
+import Link from "next/link";
+import Navbar from "@/components/Navbar";
+import styles from "./Landing.module.css";
 
-import styles from "./Home.module.css";
+export default function LandingPage() {
+  return (
+    <>
+      <Navbar />
+      <main className={styles.wrapper}>
+        <section className={styles.hero}>
+          <h1 className={styles.heading}>Welcome to <span>Eventify</span></h1>
+          <p className={styles.tagline}>Discover and explore amazing events around the world — tailored for you.</p>
+          <div className={styles.buttonGroup}>
+            <Link href="/login" className={styles.button}>Login</Link>
+            <Link href="/signup" className={styles.buttonSecondary}>Sign Up</Link>
+          </div>
+        </section>
 
-const countryOptions = [
-  { label: "Canada", code: "CA" },
-  { label: "Pakistan", code: "PK" },
-  { label: "UAE", code: "AE" },
-  { label: "United States", code: "US" },
-  { label: "United Kingdom", code: "GB" },
-  { label: "Germany", code: "DE" },
-  { label: "India", code: "IN" },
-];
-
-export default function HomePage() {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-
-  const urlCountry = searchParams.get("country") || "CA";
-  const [selectedCountry, setSelectedCountry] = useState(urlCountry);
-  const [events, setEvents] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const newCountry = searchParams.get("country") || "CA";
-    if (newCountry !== selectedCountry) {
-      setSelectedCountry(newCountry);
-    }
-  }, [searchParams]);
-
-  const loadEvents = async () => {
-    setLoading(true);
-    setError(null);
-
-    try {
-      const data = await fetchEventsByCountry(selectedCountry);
-      setEvents(data);
-    } catch (err) {
-      setError(err.message || "Something went wrong while fetching events.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    loadEvents();
-  }, [selectedCountry]);
-
-  const handleCountryChange = (e) => {
-    const country = e.target.value;
-    setSelectedCountry(country);
-    router.replace(`/?country=${country}`);
-  };
-
-return (
-  <div className={styles.wrapper}>
-    <div className={styles.filterContainer}>
-      <select
-        value={selectedCountry}
-        onChange={handleCountryChange}
-        className={styles.countrySelect}
-      >
-      {
-        countryOptions.map(({ label, code }) => (
-          <option key={code} value={code}>
-            {label}
-          </option>
-        ))}
-      </select>
-    </div>
-
-    {loading ? (
-      <Loading />
-    ): error ? (
-  <div className={styles.errorBox}>
-  <p className={styles.errorMessage}>{error}</p>
-  <button onClick={fetchEvents} className={styles.retryButton}>
-    Try Again
-    </button>
-    </div> 
-    ): 
-
-    events.length > 0 ? (
-      <div className={styles.eventGrid}>
-        {events.map((event) => (
-          <EventCard key={event.id} event={event} />
-        ))}
-      </div>
-    ) : (
-      <p>No events available for this country.</p>
-    )}
-  </div>
-);
-  
+        <section className={styles.features}>
+          <div className={styles.featureBox}>
+            <h3>🌍 Global Reach</h3>
+            <p>Browse events from over 7 countries with real-time updates.</p>
+          </div>
+          <div className={styles.featureBox}>
+            <h3>🎯 Personalized</h3>
+            <p>Set your country to get events that matter most to you.</p>
+          </div>
+          <div className={styles.featureBox}>
+            <h3>🚀 Fast & Easy</h3>
+            <p>Mock login and signup make exploring events a breeze.</p>
+          </div>
+        </section>
+      </main>
+    </>
+  );
 }

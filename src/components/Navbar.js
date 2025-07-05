@@ -2,13 +2,15 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { useRouter, usePathname } from "next/navigation";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import styles from "./Navbar.module.css";
-import {toast} from "react-toastify";
+import { toast } from "react-toastify";
 
 export default function Navbar() {
   const router = useRouter();
   const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const country = searchParams.get("country") || "CA";
 
   const [user, setUser] = useState(null);
   const [darkMode, setDarkMode] = useState(false);
@@ -58,64 +60,75 @@ export default function Navbar() {
   const handleLogout = () => {
     localStorage.removeItem("user");
     setUser(null);
-    toast.success("Logged Out successfully!");
+    toast.success("Logged out successfully!");
     router.push("/");
   };
 
-    return (
-      <nav className={styles.navbar}>
-        <div className={styles.container}>
-          <Link href="/" className={styles.logo}>
-            🎫 Eventify
+  return (
+    <nav className={styles.navbar}>
+      <div className={styles.container}>
+        <Link
+          href={user ? `/homepage?country=${country}` : "/"}
+          className={styles.logo}
+        >
+          Eventify
+        </Link>
+
+        <div className={styles.links}>
+          <Link
+            href="/about"
+            className={`${styles.link} ${
+              pathname === "/about" ? styles.active : ""
+            }`}
+          >
+            About
           </Link>
 
-          <div className={styles.links}>
-            <Link
-              href="/about"
-              className={`${styles.link} ${pathname === "/about" ? styles.active : ""}`}
-            >
-              About
-            </Link>
+          <Link
+            href="/contact"
+            className={`${styles.link} ${
+              pathname === "/contact" ? styles.active : ""
+            }`}
+          >
+            Contact
+          </Link>
 
-            <Link
-              href="/contact"
-              className={`${styles.link} ${pathname === "/contact" ? styles.active : ""}`}
-            >
-              Contact
-            </Link>
+          {user ? (
+            <>
+              <span className={styles.userName}>
+                Hi, {user.name.split(" ")[0]}
+              </span>
+              <button onClick={handleLogout} className={styles.logoutButton}>
+                Logout
+              </button>
+            </>
+          ) : (
+            <>
+              <Link
+                href="/login"
+                className={`${styles.loginButton} ${
+                  pathname === "/login" ? styles.active : ""
+                }`}
+              >
+                Login
+              </Link>
+              <Link
+                href="/signup"
+                className={`${styles.link} ${
+                  pathname === "/signup" ? styles.active : ""
+                }`}
+              >
+                Signup
+              </Link>
+            </>
+          )}
 
-            {user ? (
-              <>
-                <span className={styles.userName}>
-                  Hi, {user.name.split(" ")[0]}
-                </span>
-                <button onClick={handleLogout} className={styles.logoutButton}>
-                  Logout
-                </button>
-              </>
-            ) : (
-              <>
-                <Link
-                  href="/login"
-                  className={`${styles.loginButton} ${pathname === "/login" ? styles.active : ""}`}
-                >
-                  Login
-                </Link>
-                <Link
-                  href="/signup"
-                  className={`${styles.link} ${pathname === "/signup" ? styles.active : ""}`}
-                >
-                  Signup
-                </Link>
-              </>
-            )}
-
-            {/* Theme Toggle */}
-            <button onClick={toggleTheme} className={styles.themeToggle}>
-              {darkMode ? "🌞" : "🌙"}
-            </button>
-          </div>
+          {/* Theme Toggle */}
+          <button onClick={toggleTheme} className={styles.themeToggle}>
+            {darkMode ? "🌞" : "🌙"}
+          </button>
         </div>
-      </nav>
-    );
+      </div>
+    </nav>
+  );
 }

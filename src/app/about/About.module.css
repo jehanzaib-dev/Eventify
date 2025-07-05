@@ -1,7 +1,7 @@
 .wrapper {
   background-color: var(--bg-color);
   padding: 2rem;
-  padding-top: 130px;
+  margin-top: 14vh;
 }
 
 .heading {
@@ -14,4 +14,9 @@
   color: var(--text-color);
   margin-bottom: 0.75rem;
   line-height: 1.6;
+}
+@media (min-width: 640px) {
+  .wrapper{
+    margin-top: 10vh;
+  }
 }

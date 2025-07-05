@@ -1,11 +1,10 @@
 .wrapper {
-  height: 88vh;
-  padding: 2rem 1rem;
+  margin-top: 14vh;
   background-color: var(--bg-color);
-  padding-top: 130px;
   display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
-  align-items: start;
 }
 
 .card {
@@ -92,9 +91,9 @@
 
 .buttonGroup {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
   gap: 1rem;
-  flex-wrap: wrap;
 }
 
 .retryButton {
@@ -107,14 +106,8 @@
   cursor: pointer;
   transition: background-color 0.2s ease;
 }
-
-.retryButton:hover {
-  background-color: #b91c1c;
-}
-
 .errorbackButton {
-  background-color: #2563eb;
-  color: white;
+  color: var(--text-color);
   padding: 10px 16px;
   border-radius: 8px;
   font-size: 14px;
@@ -122,13 +115,11 @@
   transition: background-color 0.2s ease;
 }
 
-.errorbackButton:hover {
-  background-color: #1d4ed8;
-}
-
-
 
 @media (min-width: 640px) {
+  .wrapper{
+    margin-top: 10vh;
+  }
   .card {
     padding: 24px 16px;
   }

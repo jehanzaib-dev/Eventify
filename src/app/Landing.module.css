@@ -1,0 +1,132 @@
+.wrapper {
+  margin-top: 14vh;
+  background-color: var(--bg-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hero {
+  text-align: center;
+  max-width: 700px;
+  padding: 2rem 1.5rem;
+}
+
+.heading {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--text-color);
+  margin-bottom: 1rem;
+}
+
+.heading span {
+  color: #2563eb;
+}
+
+.tagline {
+  font-size: 1rem;
+  color: var(--text-color);
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+.buttonGroup {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.button {
+  background-color: #2563eb;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.95rem;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.button:hover {
+  background-color: #1d4ed8;
+}
+
+.buttonSecondary {
+  background-color: transparent;
+  border: 2px solid #2563eb;
+  color: #2563eb;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.95rem;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.buttonSecondary:hover {
+  background-color: #2563eb;
+  color: white;
+}
+
+.features {
+  width: 90%;
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 1rem;
+  max-width: 900px;
+}
+
+.featureBox {
+  background-color: var(--card-bg);
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  text-align: center;
+}
+
+.featureBox h3 {
+  font-size: 1.2rem;
+  color: var(--text-color);
+  margin-bottom: 0.75rem;
+}
+
+.featureBox p {
+  font-size: 0.95rem;
+  color: var(--text-color);
+  line-height: 1.6;
+}
+@media (min-width: 640px) {
+  .wrapper{
+    margin-top: 10vh;
+  }
+  .heading {
+    font-size: 3rem;
+  }
+
+  .tagline {
+    font-size: 1.2rem;
+    padding: 0 0.5rem;
+  }
+
+  .button {
+    font-size: 1rem;
+    padding: 0.65rem 1.2rem;
+  }
+
+  .buttonSecondary {
+    font-size: 1rem;
+    padding: 0.65rem 1.2rem;
+  }
+  .features{
+    flex-direction: row;
+  }
+  .featureBox h3 {
+    font-size: 1.5rem;
+  }
+
+  .featureBox p {
+    font-size: 1rem;
+  }
+}
+

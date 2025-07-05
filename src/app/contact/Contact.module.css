@@ -1,7 +1,7 @@
 .wrapper {
   background-color: var(--bg-color);
   padding: 2rem;
-  padding-top: 130px;
+  margin-top: 14vh;
 }
 
 .heading {
@@ -23,4 +23,9 @@
 
 .contactList li {
   margin-bottom: 0.5rem;
+}
+@media (min-width: 640px) {
+  .wrapper{
+    margin-top: 10vh;
+  }
 }

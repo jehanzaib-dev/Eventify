@@ -3,25 +3,25 @@
   top: 0;
   left: 0;
   width: 100%;
-  height: auto;
+  height: 14vh;
   background-color: var(--card-bg);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   z-index: 1000;
 }
 
 .container {
+  height: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 16px 24px;
+  padding: 16px 0;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
   gap: 1rem;
 }
 
 .logo {
-  font-size: 36px;
+  font-size: 30px;
   font-weight: bold;
   color: var(--text-color);
   text-decoration: none;
@@ -29,11 +29,12 @@
 }
 
 .links {
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
-  gap: 16px;
+  gap: 1rem;
   align-items: center;
-  justify-content: flex-end;
+  justify-content:space-evenly;
   min-width: 0;
 }
 
@@ -41,7 +42,7 @@
   color: var(--text-color);
   text-decoration: none;
   padding: 6px 10px;
-  font-size: 18px;
+  font-size: 14px;
   transition: color 0.2s ease;
   border-bottom: 2px solid transparent;
 }
@@ -99,29 +100,33 @@
   color: var(--text-color);
 }
 
-@media (max-width: 640px) {
+@media (min-width: 640px) {
+  .navbar{
+    height: 10vh;
+  }
   .container {
-    flex-direction: column;
-    align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items:center;  
   }
   .logo{
-    font-size: 30px;
+    font-size: 36px;
   }
 
   .links {
-    justify-content: space-evenly;
-    gap: 1px;
-    width: 100%;
+    gap: 3rem;
+    width: auto;
+    justify-content: flex-end;
   }
 
   .link,
   .loginButton,
   .logoutButton {
-    font-size: 14px;
+    font-size: 18px;
     padding: 6px 10px;
   }
 
   .userName {
-    font-size: 13px;
+    font-size: 18px;
   }
 }

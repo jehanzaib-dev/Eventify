@@ -33,7 +33,7 @@ export default function Login() {
     // Dispatch event to sync across tabs
     window.dispatchEvent(new Event("userChange"));
 
-    router.push("/");
+    router.push("/homepage");
   };
 
   return (
