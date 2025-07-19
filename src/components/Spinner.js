@@ -1,11 +1,13 @@
-// src/components/Spinner.js
-
-import styles from "./Spinner.module.css";
-
-export default function Spinner() {
+export default function Spinner({ size = "6", color = "border-blue-500" }) {
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.spinner}></div>
-    </div>
+    <div
+      className={`
+        h-${size} w-${size}
+        animate-spin
+        rounded-full
+        border-4 border-t-transparent
+        ${color}
+      `}
+    />
   );
 }
