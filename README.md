@@ -17,7 +17,7 @@ Eventify is a modern, responsive web app built with **Next.js** that lets users 
 - 📱 Fully responsive design
 - 🌙 Dark/Light mode toggle
 - 🧭 Active navigation highlighting
-- 🎨 Clean, modern UI with polished layouts
+- 🎨 Clean, modern Tailwind UI (utility‑first, themable)
 - 🛠 Built using **Next.js App Router**
 
 ---
@@ -33,7 +33,7 @@ Eventify is a modern, responsive web app built with **Next.js** that lets users 
 ## 🧑‍💻 Tech Stack
 
 - **Framework:** [Next.js 14+](https://nextjs.org/)
-- **Styling:** CSS Modules with CSS Variables
+- **Styling:** Tailwind CSS (utility-first) + Dark Mode (`dark` class strategy)
 - **Routing:** App Router (`app/` directory)
 - **State:** `useState`, `useEffect`, `localStorage`
 - **Deployment:** [Vercel](https://vercel.com)
@@ -43,7 +43,7 @@ Eventify is a modern, responsive web app built with **Next.js** that lets users 
 ## ⚙️ Getting Started
 
 ### 1. Clone the repo
-
+```bash
 git clone https://github.com/jehanzaib-dev/Eventify.git
 cd eventify
 2. Install dependencies
@@ -58,10 +58,8 @@ npm run dev
 arduino
 Copy code
 http://localhost:3000
-
-
 📁 Folder Structure
-vbnet
+text
 Copy code
 eventify/
 ├── app/
@@ -69,20 +67,44 @@ eventify/
 │   ├── page.js
 │   ├── login/
 │   ├── signup/
-│   ├── event/
+│   ├── homepage/
+│   ├── events/
+│       └── [id]/
+│           ├── page.jsx
+│           ├── loading.js
 ├── components/
 │   ├── Navbar.jsx
 │   ├── Footer.jsx
 │   ├── EventCard.jsx
+│   ├── Loading.jsx
+│   ├── Spinner.jsx
+│   └── shared/
+│       ├── ErrorPage.jsx
+│       └── NotFoundPage.jsx
+├── utils/
+│   ├── fetchEvents.js
+│   ├── fetchEventDetails.js
+│   └── mockUsers.js
+├── public/
+│   └── (images, favicon, screenshots)
 ├── styles/
-│   ├── globals.css
-│   ├── Navbar.module.css
-│   ├── EventCard.module.css
+│   └── globals.css   # Tailwind directives only
+├── tailwind.config.js
+├── postcss.config.js
+└── next.config.js
+🛠 Tailwind Setup Notes (Summary)
+Dark Mode: Configured via darkMode: 'class' in tailwind.config.js.
+
+Content paths: Point to app/, components/, and utils (if using classNames there).
+
+Global CSS: Only @tailwind base; @tailwind components; @tailwind utilities; plus minimal structural rules.
+
+Theming: Light mode gets subtle gray background (bg-gray-50), components use bg-white shadow-sm; dark mode uses neutral slate/dark grays.
+
 👨‍🎨 Author
 Built by Raja Jehanzaib Arshad
 
 GitHub: @jehanzaib-dev
-
 
 📄 License
 This project is licensed under the MIT License — feel free to use, fork, or contribute.
@@ -94,3 +116,5 @@ CSS Tricks
 
 Heroicons — icons used (if any)
 
+yaml
+Copy code
