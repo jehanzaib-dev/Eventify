@@ -6,10 +6,6 @@ Eventify is a modern, responsive web app built with **Next.js** that lets users 
 
 ---
 
-![Eventify Screenshot](./home.png)
-
----
-
 ## 🚀 Features
 
 - 🌍 Country-based event filtering
@@ -26,7 +22,7 @@ Eventify is a modern, responsive web app built with **Next.js** that lets users 
 
 | Home Page | Detail Page | Dark Mode |
 |-----------|-------------|-----------|
-| ![](./screenshots/home.png) | ![](./screenshots/eventDetails.png) | ![](./screenshots/darkmode.png) |
+| ![Home](public/screenshots/home.png) | ![Event Details](public/screenshots/eventDetails.png) | ![Dark Mode](public/screenshots/darkmode.png) |
 
 ---
 
@@ -113,8 +109,3 @@ This project is licensed under the MIT License — feel free to use, fork, or co
 Next.js Docs
 
 CSS Tricks
-
-Heroicons — icons used (if any)
-
-yaml
-Copy code
